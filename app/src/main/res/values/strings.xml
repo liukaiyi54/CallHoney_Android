@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Call Honey</string>
+    <string name="title_activity_add_gestures">AddGesturesActivity</string>
+</resources>
