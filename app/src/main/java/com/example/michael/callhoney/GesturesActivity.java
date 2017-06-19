@@ -20,8 +20,7 @@ import java.util.StringTokenizer;
 public class GesturesActivity extends AppCompatActivity {
 
     private ListView mListView;
-    private ArrayList gesNames;
-    private ArrayList gesPics;
+    private ArrayList gestures;
     private File gesFile;
     private GestureLibrary lib;
 
@@ -37,13 +36,13 @@ public class GesturesActivity extends AppCompatActivity {
 
         loadGestures();
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_item, R.id.label, gesNames);
+        MyAdapter adapter = new MyAdapter(this, gestures);
+
         mListView.setAdapter(adapter);
     }
 
     private void loadGestures() {
-        gesNames  = new ArrayList<String>();
-        gesPics = new ArrayList<Bitmap>();
+        gestures  = new ArrayList<>();
         gesFile = new File(Environment.getExternalStorageDirectory(), "gestures").getAbsoluteFile();
         try {
             lib = GestureLibraries.fromFile(gesFile);
@@ -56,9 +55,11 @@ public class GesturesActivity extends AppCompatActivity {
                     for (int i = 0;i < en.length; i++) {
                         ArrayList<Gesture> al = lib.getGestures(en[i].toString());
                         for (int j = 0; j < al.size(); j++) {
-                            gesNames.add(en[i].toString());
-                            Gesture gs = (Gesture)al.get(j);
-                            gesPics.add(gs.toBitmap(64, 64, 12, Color.GREEN));
+                            String name = en[i].toString();
+                            Gesture gs = al.get(j);
+                            Bitmap pic = gs.toBitmap(64, 64, 12, Color.GREEN);
+                            GestureModel model = new GestureModel(name, pic);
+                            gestures.add(model);
                         }
                     }
                 }

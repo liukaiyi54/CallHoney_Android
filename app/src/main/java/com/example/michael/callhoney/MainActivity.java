@@ -10,6 +10,7 @@ import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.GestureDetector;
+import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private GestureLibrary gesLib;
     private GestureOverlayView gesOverlay;
     private String gesPath;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
             if (predictions.size() > 0) {
                 Prediction prediction = predictions.get(0);
                 if (prediction.score > 1.0) {
-//                    Toast.makeText(this.context, prediction.name, Toast.LENGTH_SHORT).show();
                     String phone = prediction.name;
                     if (phone != "") {
                         Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+phone));

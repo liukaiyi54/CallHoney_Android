@@ -28,9 +28,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.michael.callhoney.MainActivity" />
         </activity>
-        <activity android:name=".GesturesActivity"
-            android:parentActivityName=".AddGesturesActivity">
-        </activity>
+        <activity
+            android:name=".GesturesActivity"
+            android:parentActivityName=".AddGesturesActivity"></activity>
     </application>
 
 </manifest>

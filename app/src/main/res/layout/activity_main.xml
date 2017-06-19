@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     tools:context="com.example.michael.callhoney.MainActivity">
 
+
     <android.gesture.GestureOverlayView
         android:id="@+id/myGesture1"
         android:layout_width="fill_parent"
@@ -20,6 +21,15 @@
             android:layout_height="wrap_content"
             android:onClick="onClickButton"
             android:text="Add gesture" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/cloud" />
+
     </android.gesture.GestureOverlayView>
 
 </android.support.constraint.ConstraintLayout>
