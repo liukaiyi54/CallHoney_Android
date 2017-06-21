@@ -1,21 +1,26 @@
 package com.example.michael.callhoney;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.gesture.Gesture;
 import android.gesture.GestureLibraries;
 import android.gesture.GestureLibrary;
 import android.net.Uri;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 import android.gesture.Prediction;
 import android.gesture.GestureOverlayView;
+
 import java.io.File;
 import java.util.ArrayList;
 
@@ -30,26 +35,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (!Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
-            Toast.makeText(this, "SD卡不存在!程序无法运行", Toast.LENGTH_LONG).show();
-            finish();
+        if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CALL_PHONE}, 1);
         }
 
-        gesPath = new  File(Environment.getExternalStorageDirectory(), "gestures").getAbsolutePath();
-        File file = new File(gesPath);
-
-        if (!file.exists()) {
-            Toast.makeText(this, "gestures文件不存在!程序无法运行", Toast.LENGTH_LONG).show();
-            finish();
-        }
-
-        gesLib = GestureLibraries.fromFile(gesPath);
-        if (!gesLib.load()) {
-            Toast.makeText(this, "gestures文件读取失败!程序无法运行", Toast.LENGTH_LONG).show();
-            finish();
-        }
-
-        gesOverlay = (GestureOverlayView)findViewById(R.id.myGesture1);
+        gesOverlay = (GestureOverlayView) findViewById(R.id.myGesture1);
         gesOverlay.addOnGesturePerformedListener(new MyListener(this));
 
     }
@@ -63,13 +53,25 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onGesturePerformed(GestureOverlayView gestureOverlayView, Gesture gesture) {
+
+            gesPath = new File(getFilesDir(), "gestures").getPath();
+            gesLib = GestureLibraries.fromFile(gesPath);
+
+            gesLib.load();
+
             ArrayList<Prediction> predictions = gesLib.recognize(gesture);
             if (predictions.size() > 0) {
                 Prediction prediction = predictions.get(0);
                 if (prediction.score > 1.0) {
                     String phone = prediction.name;
                     if (phone != "") {
-                        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+phone));
+                        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phone));
+
+                        if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CALL_PHONE}, 1);
+                            return;
+                        }
+
                         startActivity(intent);
                     }
                 } else {
@@ -81,10 +83,23 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void onClickButton(View view) {
-        Intent intent = new Intent(this, AddGesturesActivity.class);
-        MainActivity.this.startActivity(intent);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.mybutton:
+                startActivity(new Intent(this, AddGesturesActivity.class));
+                break;
+            case R.id.mybuton2:
+                startActivity(new Intent(this, GesturesActivity.class));
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
 

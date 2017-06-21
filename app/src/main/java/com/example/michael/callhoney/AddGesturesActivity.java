@@ -37,12 +37,7 @@ public class AddGesturesActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("添加手势");
-
-        if (!Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
-            Toast.makeText(this, "SD卡不存在！程序无法运行", Toast.LENGTH_SHORT).show();
-            finish();
-        }
+        getSupportActionBar().setTitle("空白处画手势呐笨");
 
         et = (EditText) this.findViewById(R.id.editText);
         overlay = (GestureOverlayView) this.findViewById(R.id.myGesture1);
@@ -51,7 +46,7 @@ public class AddGesturesActivity extends AppCompatActivity {
         button02 = (Button)this.findViewById(R.id.button2);
         button03 = (Button)this.findViewById(R.id.button3);
 
-        gesPath = new File(Environment.getExternalStorageDirectory(), "gestures").getAbsolutePath();
+        gesPath = new File(getFilesDir(), "gestures").getPath();
 
         et.setOnKeyListener(new EditText.OnKeyListener() {
             @Override
@@ -106,13 +101,13 @@ public class AddGesturesActivity extends AppCompatActivity {
                             button01.setEnabled(false);
                             overlay.clear(true);
 
-                            Toast.makeText(AddGesturesActivity.this, "保存成功:" + gesPath, Toast.LENGTH_LONG).show();
+                            Toast.makeText(AddGesturesActivity.this, "保存成功", Toast.LENGTH_LONG).show();
                         } else {
-                            Toast.makeText(AddGesturesActivity.this, "保存失败：" + gesPath, Toast.LENGTH_LONG).show();
+                            Toast.makeText(AddGesturesActivity.this, "保存失败", Toast.LENGTH_LONG).show();
                         }
                     } else {
                         if (!lib.load()) {
-                            Toast.makeText(AddGesturesActivity.this, "读取失败：" + gesPath, Toast.LENGTH_LONG).show();
+                            Toast.makeText(AddGesturesActivity.this, "读取失败", Toast.LENGTH_LONG).show();
                         } else {
                             Set<String> en = lib.getGestureEntries();
                             if (en.contains(gesName)) {
@@ -126,9 +121,9 @@ public class AddGesturesActivity extends AppCompatActivity {
                                 et.setText("");
                                 button01.setEnabled(false);
                                 overlay.clear(true);
-                                Toast.makeText(AddGesturesActivity.this, "保存成功：" + gesPath, Toast.LENGTH_LONG).show();
+                                Toast.makeText(AddGesturesActivity.this, "保存成功", Toast.LENGTH_LONG).show();
                             } else {
-                                Toast.makeText(AddGesturesActivity.this, "保存失败：" + gesPath, Toast.LENGTH_LONG).show();
+                                Toast.makeText(AddGesturesActivity.this, "保存失败", Toast.LENGTH_LONG).show();
                             }
                         }
                     }
@@ -141,7 +136,6 @@ public class AddGesturesActivity extends AppCompatActivity {
         button02.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
-                et.setText("");
                 button01.setEnabled(false);
                 overlay.clear(true);
             }
@@ -154,5 +148,11 @@ public class AddGesturesActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
     }
 }

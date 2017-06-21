@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/mybutton"
+        android:title="添加手势"
+        />
+    <item
+        android:id="@+id/mybuton2"
+        android:title="已有手势"
+        />
+</menu>

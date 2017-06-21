@@ -12,15 +12,9 @@
         android:id="@+id/myGesture1"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:gestureColor="#81D8D0"
         android:layout_weight="1.0"
         android:gestureStrokeType="single" >
-
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onClickButton"
-            android:text="Add gesture" />
 
         <ImageView
             android:id="@+id/imageView"

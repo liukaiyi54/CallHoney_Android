@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:layout_gravity="right"
-            android:text="Gestures" />
+            android:text="已有手势" />
         </android.support.v7.widget.Toolbar>
 
 
@@ -41,15 +41,6 @@
         android:text="输入号码:"
         android:textSize="18sp" />
 
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="100dp"
-        android:ems="10"
-        android:inputType="phone"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
 
     <android.gesture.GestureOverlayView
         android:id="@+id/myGesture1"
@@ -58,27 +49,57 @@
         android:layout_weight="1.0"
         android:layout_marginTop="40dp"
         android:layout_marginBottom="40dp"
+        android:gestureColor="@color/colorPrimary"
         android:gestureStrokeType="single"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
     </android.gesture.GestureOverlayView>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom">
+        android:layout_marginRight="2dp"
+        android:layout_marginLeft="2dp"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal" >
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="0dip"
             android:layout_height="wrap_content"
-            android:text="添加"
+            android:layout_weight="1"
+            android:text="OK"
             android:id="@+id/button1"
             />
         <Button
             android:id="@+id/button2"
-            android:layout_width="wrap_content"
+            android:layout_width="0dip"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:layout_alignParentRight="true"
             android:text="重置" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="100dp"
+            android:ems="10"
+            android:inputType="phone"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        <!--<Button-->
+            <!--android:id="@+id/clearable_button_clear"-->
+            <!--android:layout_width="30dip"-->
+            <!--android:layout_height="30dip"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:background="@android:drawable/ic_menu_close_clear_cancel"-->
+            <!--android:layout_toRightOf="@+id/editText" />-->
 
     </RelativeLayout>
 
